@@ -3,16 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using XrmEarth.Configuration.Common;
-using XrmEarth.Configuration.Storages;
 using XrmEarth.Configuration.Data.Core;
+using XrmEarth.Configuration.Storages;
 
 namespace XrmEarth.Configuration.Policies
 {
-    //TODO [-] 31.10.2017 - Fetch yapýsýna sayfalama geliþtirmesi yapýlarak. 200 deðerden daha fazla saklanabilir hale getirilmeli.
     /// <summary>
-    /// Ayarlarý varlýk üzerinde saklar ve okur.
-    /// <para></para>
-    /// <c>Not:</c> Maksimum 200 deðer saklayabilir.
+    /// TODO : Max 200 key!
     /// </summary>
     public class EntityStoragePolicy : CrmStoragePolicy
     {
@@ -25,22 +22,22 @@ namespace XrmEarth.Configuration.Policies
         }
 
         /// <summary>
-        /// Varsayýlan deðer: 'rms'
+        /// Default Value : 'new'
         /// </summary>
         public string Prefix { get; set; }
         /// <summary>
-        /// Varlýk mantýksal adý.
-        /// Varsayýlan deðer: 'configuration'
+        /// Entity Name
+        /// Default Value : 'configuration'
         /// </summary>
         public string LogicalName { get; set; }
         /// <summary>
-        /// Varlýk üzerindeki key alanýnýn mantýksal adý.
-        /// Varsayýlan deðer: 'key'
+        /// Field Name
+        /// Default Value : 'name'
         /// </summary>
         public string KeyAttributeLogicalName { get; set; }
         /// <summary>
-        /// Varlýk üzerindeki deðer alanýnýn mantýksal adý.
-        /// Varsayýlan deðer: 'value'
+        /// Field Name
+        /// Default Value : 'value'
         /// </summary>
         public string ValueAttributeLogicalName { get; set; }
 
@@ -56,7 +53,6 @@ namespace XrmEarth.Configuration.Policies
             return entityStorage.ReadValues(service, keys);
         }
 
-
         public string GetFullName<TProp>(Expression<Func<EntityStoragePolicy, TProp>> propertyExperssion)
         {
             var prop = GetType().GetProperty(((MemberExpression)propertyExperssion.Body).Member.Name);
@@ -64,7 +60,6 @@ namespace XrmEarth.Configuration.Policies
             var value = prop.GetValue(this);
             return string.Format("{0}_{1}", Prefix, value);
         }
-
 
         private CustomEntityCollection CreateCustomeEntityCollection()
         {

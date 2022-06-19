@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Microsoft.Xrm.Sdk;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Xml.Serialization;
-using Microsoft.Xrm.Sdk;
-using Newtonsoft.Json;
-using XrmEarth.Configuration.Data.Core;
 using XrmEarth.Configuration.Common;
+using XrmEarth.Configuration.Data.Core;
 using XrmEarth.Configuration.Storages;
 
 namespace XrmEarth.Configuration.Policies
 {
     /// <summary>
-    /// Ayarları web kaynağı üzerinde saklar ve okur.
+    /// It stores and reads the settings on the web resource
     /// </summary>
     public class WebResourceStoragePolicy : CrmStoragePolicy
     {
@@ -26,32 +26,32 @@ namespace XrmEarth.Configuration.Policies
         }
 
         /// <summary>
-        /// Varsayılan değer: 'rms'
+        /// Default Value : 'new'
         /// </summary>
         public string Prefix { get; set; }
         /// <summary>
-        /// Çözüm adı girilerek oluşturulacak web kaynağının çözüme bağlanması sağlanabilir.
+        /// By entering the solution name, the web resource to be created can be connected to the solution.
         /// <para></para>
-        /// <code>Not: Sadece oluşturma işleminde geçerlidir. Güncelleme işlemlerinde çözüm değiştirilemez.</code>
+        /// <code>Note: Applies to creation only. The solution cannot be changed during the update process.</code>
         /// </summary>
         public string SolutionUniqueName { get; set; }
         /// <summary>
-        /// Varsayılan değer: 'configuration'
+        /// Default Value : 'configuration'
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Varsayılan değer: 'XrmEarth.Configuration'
+        /// Default Value : 'XrmEarth.Configuration'
         /// </summary>
         public string DisplayName { get; set; }
         /// <summary>
-        /// Varsayılan değer: 'XrmEarth.Configuration kaynağı'
+        /// Default Value : 'XrmEarth.Configuration WebResource'
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Varsayılan değer: UTF8
+        /// Default Value : UTF8
         /// <para></para>
-        /// Web kaynağı okuma yazma işlemlerinde kullanılır.
+        /// It is used for web resource read-write operations
         /// </summary>
         [JsonIgnore]
         [XmlIgnore]
@@ -75,7 +75,6 @@ namespace XrmEarth.Configuration.Policies
             return webResourceStorage.ReadValues(service, keys);
         }
 
-
         public string GetFullName<TProp>(Expression<Func<WebResourceStoragePolicy, TProp>> propertyExperssion)
         {
             var prop = GetType().GetProperty(((MemberExpression)propertyExperssion.Body).Member.Name);
@@ -83,7 +82,6 @@ namespace XrmEarth.Configuration.Policies
             var value = prop.GetValue(this);
             return string.Format("{0}_{1}", Prefix, value);
         }
-
 
         private WebResource CreateWebResource()
         {

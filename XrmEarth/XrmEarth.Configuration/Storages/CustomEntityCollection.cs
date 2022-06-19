@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
-using XrmEarth.Configuration.Data.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using XrmEarth.Configuration.Common;
+using XrmEarth.Configuration.Data.Core;
 using XrmEarth.Configuration.Query;
 
 namespace XrmEarth.Configuration.Storages
@@ -22,9 +22,7 @@ namespace XrmEarth.Configuration.Storages
             _entityTemplate = template;
         }
 
-
         private readonly EntityTemplate _entityTemplate;
-
 
         public void WriteValues(IOrganizationService service, Dictionary<string, ValueContainer> values)
         {
@@ -64,7 +62,6 @@ namespace XrmEarth.Configuration.Storages
 
             return ToValueContainerDictionary();
         }
-
 
         public void Bind(Dictionary<string, ValueContainer> values)
         {
@@ -144,7 +141,6 @@ namespace XrmEarth.Configuration.Storages
             return builder.GetOuterXml();
         }
 
-
         private void SendRequest(IOrganizationService service, IEnumerable<OrganizationRequest> requests)
         {
             var multipleRequest = new ExecuteMultipleRequest
@@ -156,7 +152,7 @@ namespace XrmEarth.Configuration.Storages
             {
                 multipleRequest.Requests.Add(request);
             }
-            //TODO [-] 01.11.2017 - Multiple request sonucu işlenmeli.
+            //TODO : Multiple Request Check
             service.Execute(multipleRequest);
         }
     }

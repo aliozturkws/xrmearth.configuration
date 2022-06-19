@@ -15,9 +15,7 @@ namespace XrmEarth.Configuration.Initializer.Core
             Target = storageTarget;
         }
 
-
         public T1 Target { get; protected set; }
-
 
         public override void Save(T storageObject)
         {

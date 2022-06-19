@@ -1,19 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using XrmEarth.Configuration.Data.Exceptions;
 using XrmEarth.Configuration.Target;
 
 namespace XrmEarth.Configuration.Data
 {
-    /// <summary>
-    /// Bağlantı koleksiyonu.
-    /// <para></para>
-    /// StorageTarget nesnesinden türetilmiş bağlantıları saklayabilir.
-    /// <para></para>
-    /// <code>Not: XML serialize destekler.</code>
-    /// </summary>
     public class TargetCollection : List<StorageTarget>, IXmlSerializable
     {
         public XmlSchema GetSchema()
@@ -30,10 +23,10 @@ namespace XrmEarth.Configuration.Data
             {
                 var targetTypeName = reader.GetAttribute("AssemblyName");
                 if(string.IsNullOrWhiteSpace(targetTypeName))
-                    throw new InvalidTypeException("Belirtilmiş hedefe ait tip tespit edilemedi.");
+                    throw new Exception("The type of the specified target could not be detected.");
                 var type = Utils.GetType(targetTypeName);
                 if(type == null)
-                    throw new InvalidTypeException(string.Format("'{0}' tipi bulunamadı. Mevcut kütüphane '{1}'", targetTypeName, typeof(TargetCollection).Assembly.FullName));
+                    throw new Exception(string.Format("'{0}' type not found. existing assembly '{1}'", targetTypeName, typeof(TargetCollection).Assembly.FullName));
 
                 var serial = new XmlSerializer(type);
 

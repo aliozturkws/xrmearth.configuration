@@ -35,7 +35,7 @@ namespace XrmEarth.Configuration.Storages
         public string RawContent { get; set; }
 
         public Encoding Encoding { get; set; }
-        
+
         public string Content
         {
             get
@@ -59,7 +59,6 @@ namespace XrmEarth.Configuration.Storages
             }
         }
 
-        
         public void WriteValues(IOrganizationService service, Dictionary<string, ValueContainer> values)
         {
             var jsonData = JsonSerializerUtil.Serialize(values);
@@ -71,7 +70,7 @@ namespace XrmEarth.Configuration.Storages
             if (result.Entities.Count == 0)
             {
                 var entity = ToEntity();
-                var createRequest = new CreateRequest{Target = entity};
+                var createRequest = new CreateRequest { Target = entity };
                 if (!string.IsNullOrWhiteSpace(SolutionUniqueName))
                 {
                     createRequest.Parameters.Add(SolutionUniqueNameParam, SolutionUniqueName);
@@ -100,7 +99,6 @@ namespace XrmEarth.Configuration.Storages
             var jsonData = RawContent;
             return JsonSerializerUtil.Deserialize<Dictionary<string, ValueContainer>>(jsonData);
         }
-
 
         public void Publish(IOrganizationService service)
         {
@@ -131,7 +129,7 @@ namespace XrmEarth.Configuration.Storages
                 }
             };
 
-            //Test edilmeli.
+            //TODO: Check!
             //if (SolutionID.HasValue && SolutionID.Value != Guid.Empty)
             //{
             //    entity.Attributes.Add(SolutionIDField, new EntityReference(SolutionLogicalName, SolutionID.Value));
@@ -163,7 +161,7 @@ namespace XrmEarth.Configuration.Storages
                 SolutionID = entity.GetAttributeValue<EntityReference>(SolutionIDField).Id;
         }
 
-        
+
         public string BuildQuery(bool includeContent = false, string[] otherAttributes = null)
         {
             var builder = new XmlBuilder();

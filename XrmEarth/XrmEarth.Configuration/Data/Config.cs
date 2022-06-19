@@ -6,9 +6,6 @@ using XrmEarth.Core.Configuration.Common;
 
 namespace XrmEarth.Configuration.Data
 {
-    /// <summary>
-    /// ConfigurationManager sýnýfýnýn deðiþkenlerini saklar.<para></para>
-    /// </summary>
     public class Config
     {
         public static readonly HashSet<Assembly> RegisteredAssemblies = new HashSet<Assembly>();

@@ -10,9 +10,7 @@ namespace XrmEarth.Configuration.Initializer
 {
     public class CrmStorageInitializer<T> : StorageInitializer<T, CrmStorageTarget>
     {
-        public CrmStorageInitializer(CrmStorageTarget storageTarget, StoragePolicy policy, StorageObjectContainer objectContainer) : base(storageTarget, policy, objectContainer)
-        {
-        }
+        public CrmStorageInitializer(CrmStorageTarget storageTarget, StoragePolicy policy, StorageObjectContainer objectContainer) : base(storageTarget, policy, objectContainer) { }
 
         public CrmStoragePolicy Policy
         {
@@ -21,8 +19,8 @@ namespace XrmEarth.Configuration.Initializer
 
         protected override void WriteValues(Dictionary<string, ValueContainer> values)
         {
-            if(Policy == null)
-                throw new NullReferenceException("Crm Storage Policy oluşturulmamış.");
+            if (Policy == null)
+                throw new NullReferenceException("Crm Storage Policy not created.");
 
             Policy.WriteValues(Target.Service, values);
         }
@@ -30,7 +28,7 @@ namespace XrmEarth.Configuration.Initializer
         protected override Dictionary<string, ValueContainer> ReadValues(Dictionary<string, Type> keys)
         {
             if (Policy == null)
-                throw new NullReferenceException("Crm Storage Policy oluşturulmamış.");
+                throw new NullReferenceException("Crm Storage Policy not created.");
 
             return Policy.ReadValues(Target.Service, keys);
         }

@@ -5,10 +5,6 @@ using XrmEarth.Configuration.Data.Core;
 
 namespace XrmEarth.Configuration.Policies
 {
-    /// <summary>
-    /// Crm üzerinde veri saklama politikası. Genel olarak verilerin saklanma ve okunma yöntemlerini içerir.
-    /// <para></para>
-    /// Bilinen tipler;
     /// <para></para>
     /// 1- WebResource (WebResourceStoragePolicy)
     /// <para></para>
@@ -21,9 +17,6 @@ namespace XrmEarth.Configuration.Policies
             Type = GetType().FullName;
         }
 
-        /// <summary>
-        /// Serialize işlemleri için sınıfa ait tip bilgisini saklar.
-        /// </summary>
         public string Type { get; set; }
 
         public abstract void WriteValues(IOrganizationService service, Dictionary<string, ValueContainer> values);

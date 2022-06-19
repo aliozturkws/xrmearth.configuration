@@ -102,16 +102,11 @@
     <Compile Include="Data\Core\IStorageInitializer.cs" />
     <Compile Include="Data\Core\IStorageTarget.cs" />
     <Compile Include="Data\Core\IValueConverter.cs" />
-    <Compile Include="Data\Core\JsonCreationConverter.cs" />
     <Compile Include="Data\Core\LazyValueLoader.cs" />
     <Compile Include="Data\Core\StartupConfigReadSettings.cs" />
-    <Compile Include="Data\Core\StorageTargetJsonConverter.cs" />
     <Compile Include="Data\Core\ValueContainer.cs" />
-    <Compile Include="Data\Exceptions\ConfigurationCoreException.cs" />
-    <Compile Include="Data\Exceptions\InvalidTypeException.cs" />
     <Compile Include="Data\StartupConfiguration.cs" />
     <Compile Include="Data\StartupConfigurationCollection.cs" />
-    <Compile Include="Data\Storage\StorageContainer.cs" />
     <Compile Include="Data\Storage\StorageFieldContainer.cs" />
     <Compile Include="Data\Storage\StorageObjectContainer.cs" />
     <Compile Include="Data\Storage\StorageObjectPolicy.cs" />

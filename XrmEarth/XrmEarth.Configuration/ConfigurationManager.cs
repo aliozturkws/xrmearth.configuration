@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using XrmEarth.Configuration.Attributes;
 using XrmEarth.Configuration.Data;
-using XrmEarth.Configuration.Data.Exceptions;
 using XrmEarth.Configuration.Data.Storage;
 using XrmEarth.Configuration.Initializer.Core;
 using XrmEarth.Configuration.Target;
@@ -146,16 +145,16 @@ namespace XrmEarth.Configuration
             else
             {
                 if (objectContainer.TargetType == null)
-                    throw new InvalidTypeException(string.Format("'{0}' tipi '{1}' özelliklerinden birini içermelidir. Sınıf için birden fazla hedef bulunduğu için tip belirtilmeli.", type.FullName, BaseStorageAttributeType));
+                    throw new Exception(string.Format("'{0}' tipi '{1}' özelliklerinden birini içermelidir. Sınıf için birden fazla hedef bulunduğu için tip belirtilmeli.", type.FullName, BaseStorageAttributeType));
 
                 target = startupConfiguration.Targets.FirstOrDefault(t => t.GetType() == objectContainer.TargetType);
                 if (target == null)
-                    throw new InvalidTypeException($"'{type.FullName}' tipi için kullanılan '{objectContainer.TargetType}' hedef için bağlantı bilgileri ayar dosyasında bulunamadı. Mevcut hedefler{string.Join(", ", startupConfiguration.Targets.Select(sc => string.Concat("'", sc.GetType(), "'")))}");
+                    throw new Exception($"'{type.FullName}' tipi için kullanılan '{objectContainer.TargetType}' hedef için bağlantı bilgileri ayar dosyasında bulunamadı. Mevcut hedefler{string.Join(", ", startupConfiguration.Targets.Select(sc => string.Concat("'", sc.GetType(), "'")))}");
             }
 
             var storageInitializer = target.CreateInitializer<T>(new StoragePolicy(), objectContainer);
             if (storageInitializer == null)
-                throw new ConfigurationCoreException($"'{objectContainer.TargetType.Name}' hedefi için konteyner oluşturulamadı.");
+                throw new Exception($"'{objectContainer.TargetType.Name}' hedefi için konteyner oluşturulamadı.");
 
             return storageInitializer;
         }

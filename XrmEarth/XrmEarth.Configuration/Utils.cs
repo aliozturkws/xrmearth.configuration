@@ -106,7 +106,7 @@ namespace XrmEarth.Configuration
         }
 
         /// <summary>
-        /// IL Merge için
+        /// IL Merge
         /// </summary>
         /// <param name="typeName"></param>
         /// <returns></returns>
