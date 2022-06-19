@@ -16,5 +16,5 @@
 
 ### Installing
 
-* Download solution [xrmearthconfiguration.zip](https://drive.google.com/file/d/15qsMUHVJVnXOLZMjDh6OPYELNoA1nBp-/view?usp=sharing) and add it to crm. :floppy_disk:
-* then customize it by reviewing the [example here](https://drive.google.com/drive/u/0/folders/1xh3dk_v_jM0k8dj8WV9KOjPhpjL60Qmq) :point_left:
+* Download solution [xrmearthconfiguration.zip](https://drive.google.com/file/d/1Du6HcDSkTQc234PdDdh78vL3MwNw5nOb/view?usp=sharing) and add it to crm. :floppy_disk:
+* then customize it by reviewing the [example here](https://drive.google.com/drive/folders/1TqphqroZjoSX_5LiWJWiFe3lh3IZOUaE?usp=sharing) :point_left:
