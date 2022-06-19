@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1340
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEarth.Configuration", "XrmEarth.Configuration\XrmEarth.Configuration.csproj", "{5BA11878-423E-4EBB-9D9F-55E36D2F6665}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEarth.Samples", "XrmEarth.Samples\XrmEarth.Samples.csproj", "{5BF2AB20-51A7-47A9-9D27-7136B8BFD78D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5BA11878-423E-4EBB-9D9F-55E36D2F6665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BA11878-423E-4EBB-9D9F-55E36D2F6665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BA11878-423E-4EBB-9D9F-55E36D2F6665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BA11878-423E-4EBB-9D9F-55E36D2F6665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BF2AB20-51A7-47A9-9D27-7136B8BFD78D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BF2AB20-51A7-47A9-9D27-7136B8BFD78D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BF2AB20-51A7-47A9-9D27-7136B8BFD78D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BF2AB20-51A7-47A9-9D27-7136B8BFD78D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6732402F-D93E-4CC2-8163-0BE80412D044}
+	EndGlobalSection
+EndGlobal
