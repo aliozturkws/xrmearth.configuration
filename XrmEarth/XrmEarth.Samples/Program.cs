@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Tooling.Connector;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 
 namespace XrmEarth.Samples
 {
@@ -13,7 +16,11 @@ namespace XrmEarth.Samples
 
             var settings = AppSettings.Default(orgService);
 
+            string jsonFormatted = JValue.Parse(JsonConvert.SerializeObject(settings)).ToString(Formatting.Indented);
 
+            Console.WriteLine(jsonFormatted);
+
+            Console.ReadKey();
         }
     }
 }

@@ -42,11 +42,11 @@ namespace XrmEarth.Samples
         {
             Config.Sandbox = true;
 
-            ConfigurationManager.Init(new Config
-            {
-                ConfigurationPath = null,
-                Key = null,
-            });
+            //ConfigurationManager.Init(new Config
+            //{
+            //    ConfigurationPath = null,
+            //    Key = null,
+            //});
         }
     }
 }

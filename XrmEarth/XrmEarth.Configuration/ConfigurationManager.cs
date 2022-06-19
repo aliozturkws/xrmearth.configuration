@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using XrmEarth.Configuration.Attributes;
 using XrmEarth.Configuration.Data;
-using XrmEarth.Configuration.Data.Core;
 using XrmEarth.Configuration.Data.Exceptions;
 using XrmEarth.Configuration.Data.Storage;
 using XrmEarth.Configuration.Initializer.Core;
 using XrmEarth.Configuration.Target;
-using XrmEarth.Configuration.Utility;
-using XrmEarth.Core.Configuration.Common;
 
 namespace XrmEarth.Configuration
 {
@@ -47,9 +43,6 @@ namespace XrmEarth.Configuration
         protected readonly Dictionary<Type, StorageObjectContainer> ContainerCaches = new Dictionary<Type, StorageObjectContainer>();
 
         private Config _config;
-        /// <summary>
-        /// Mevcut konfigurasyon, değişiklikler için InitConfig metodunu kullanın.
-        /// </summary>
         public Config Config
         {
             get
@@ -59,9 +52,6 @@ namespace XrmEarth.Configuration
                 return _config;
             }
         }
-
-        private StartupConfigurationInitializer _startupConfigInitializer;
-        protected StartupConfigurationInitializer StartupConfigInitializer => _startupConfigInitializer ?? (_startupConfigInitializer = new StartupConfigurationInitializer(Config));
 
         public void InitConfig(Config overrideConfig = null)
         {
@@ -135,9 +125,10 @@ namespace XrmEarth.Configuration
         {
             type = type ?? typeof(T);
 
-            var startupConfiguration = StartupConfigInitializer.LoadConfiguration(key);
+            //var startupConfiguration = StartupConfigInitializer.LoadConfiguration(key);
 
-            return CreateInitializer<T>(startupConfiguration, type);
+            //return CreateInitializer<T>(null, type);
+            return null;
         }
 
         public BaseInitializer<T> CreateInitializer<T>(StartupConfiguration startupConfiguration, Type type = null)
@@ -197,105 +188,7 @@ namespace XrmEarth.Configuration
             return stObjCont;
         }
 
-        #endregion - WORKERS -
-
-        #region - INITIALIZER -
-
-        public StartupConfigurationInitializer CreateConfigurationInitializer()
-        {
-            return new StartupConfigurationInitializer(Config);
-        }
-
-        /// <summary>
-        /// Başlangıç konfigürasyon yapılandırıcısı.
-        /// </summary>
-        public class StartupConfigurationInitializer
-        {
-            internal StartupConfigurationInitializer(Config config)
-            {
-                Config = config;
-            }
-
-            protected readonly Config Config;
-
-            /// <summary>
-            /// Başlangıç konfigürasyonlarını kaydeder.
-            /// <para></para>
-            /// <para></para>
-            /// Gerekli değişkenleri <c>Config</c> üzerinden alır. (bkz. <c>ConfigurationManager.Init(Config)</c>)
-            /// </summary>
-            /// <param name="configurations">Kaydedilecek başlangıç konfigürasyonları.<para></para>Not: Eğer daha önceden oluşturulmuş konfigürasyonlar varsa üzerine yazar.</param>
-            public void SaveConfigurations(List<StartupConfiguration> configurations)
-            {
-                try
-                {
-                    SaveConfigurationInternal(configurations, Config.ConfigurationPath);
-                }
-                catch (Exception ex)
-                {
-                    throw new ConfigurationCoreException(string.Format(ConfigurationCoreException.InitializeStartupConfigurationMessage, Config.ConfigurationPath), ex);
-                }
-            }
-
-            /// <summary>
-            /// Başlangıç konfigürasyonları içinden belirtilmiş anahtara göre konfigürasyon yükler.
-            /// <para></para>
-            /// Anahtar atanmaması durumunda mevcut <c>Config</c> üzerindeki (Key) değeri kullanır.
-            /// <para></para>
-            /// Konfigurasyonlar içerisinde belirtilen anahatara sahip konfigürasyonu bulamazsa <c>NULL</c> döner.
-            /// </summary>
-            /// <exception cref = "ConfigurationCoreException" > Başlangıç konfigürasyon dosyasını bulamazsa, dosya yapısı değiştirilmiş veya erişim hatası alınıyorsa.</exception>
-            /// <param name="key">Konfigürasyonlar içinden özel bir anahtara ait konfigürasyonu yüklemek için kullanılır. Boş geçilmesi durumunda <c>Init</c> edilmiş anahtara göre işlem yapar (<c>bkz. ConfigurationManager.Init(Config)</c>).</param>
-            /// <returns>Konfigürasyon</returns>
-            public StartupConfiguration LoadConfiguration(string key = null)
-            {
-                key = key ?? Config.Key;
-                var config = LoadConfigurations().FirstOrDefault(cs => cs.Key == key);
-
-                return config;
-            }
-            /// <summary>
-            /// Başlangıç konfigürasyonlarını yükler.
-            /// <para></para>
-            /// </summary>
-            /// <exception cref = "ConfigurationCoreException" > Başlangıç konfigürasyon dosyasını bulamazsa, dosya yapısı değiştirilmiş veya erişim hatası alınıyorsa.</exception>
-            /// <returns>Konfigürasyonlar</returns>
-            public List<StartupConfiguration> LoadConfigurations()
-            {
-                //if (!File.Exists(Config.ConfigurationPath))
-                //    throw new ConfigurationCoreException(string.Format("Ayar dosyası bulunamadı. Lütfen temel yapılandırıcıyı çalıştırdıktan sonra uygulamayı başlatın. Dosya dizini: {0}", Config.ConfigurationPath));
-
-                List<StartupConfiguration> configs;
-                try
-                {
-                    configs = LoadConfigurationInternal(Config.ConfigurationPath, Config.ConfigReadSettings);
-                }
-                catch (Exception ex)
-                {
-                    throw new ConfigurationCoreException("Ayar dosyası okunurken bir hata meydana geldi. Dosya bozulmuş veya erişilemiyor olabilir. Temel yapılandırıcıyı çalıştırarak ayar dosyasını yeniden yapılandırın. Dosya dizini : " + Config.ConfigurationPath, ex);
-                }
-
-                return configs;
-            }
-
-            private void SaveConfigurationInternal(List<StartupConfiguration> configurations, string filePath)
-            {
-                var f = new FileInfo(filePath);
-                if (!Directory.Exists(f.DirectoryName))
-                    Directory.CreateDirectory(f.DirectoryName);
-
-                JsonSerializerUtil.SerializeFile(configurations, filePath);
-            }
-            private List<StartupConfiguration> LoadConfigurationInternal(string filePath, StartupConfigReadSettings readSettings)
-            {
-                var converters = readSettings.Converters;
-                return converters == null
-                    ? JsonSerializerUtil.DeserializeFile<List<StartupConfiguration>>(filePath)
-                    : JsonSerializerUtil.DeserializeFile<List<StartupConfiguration>>(filePath, converters.ToArray());
-            }
-        }
-
-        #endregion - INITIALIZER -
+        #endregion - WORKERS - 
 
         #region - STATIC -
         /// <summary>
@@ -437,15 +330,6 @@ namespace XrmEarth.Configuration
         public static void LoadObject(object instance, StartupConfiguration startupConfiguration)
         {
             Instance.LoadObjectSettings(instance, startupConfiguration);
-        }
-
-        /// <summary>
-        /// Başlangıç konfigürasyonlarını yapılandıran nesneyi oluşturur.
-        /// </summary>
-        /// <returns>Başlangıç konfigürasyon yapılandırıcısı</returns>
-        public static StartupConfigurationInitializer CreateStartupConfigurationInitializer()
-        {
-            return Instance.CreateConfigurationInitializer();
         }
 
         #endregion - STATIC -
