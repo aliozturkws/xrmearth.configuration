@@ -117,7 +117,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppSettings.cs" />
+    <Compile Include="AppSettingsForWebResource.cs" />
+    <Compile Include="AppSettingsForEntity.cs" />
     <Compile Include="XrmConnection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

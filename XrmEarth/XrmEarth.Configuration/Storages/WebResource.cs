@@ -161,7 +161,6 @@ namespace XrmEarth.Configuration.Storages
                 SolutionID = entity.GetAttributeValue<EntityReference>(SolutionIDField).Id;
         }
 
-
         public string BuildQuery(bool includeContent = false, string[] otherAttributes = null)
         {
             var builder = new XmlBuilder();

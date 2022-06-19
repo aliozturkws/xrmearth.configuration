@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System;
+using System.Text;
 using XrmEarth.Configuration.Data;
 using XrmEarth.Configuration.Policies;
 using XrmEarth.Configuration.Target;
@@ -12,7 +13,6 @@ namespace XrmEarth.Samples
         public CustomApi CustomApi { get; set; }
         public ReportServer ReportServer { get; set; }
 
-        #region | Static Members |
         private static AppSettings _defaultSettings;
         private static DateTime _settingsValidUntil = DateTime.MinValue;
         public static AppSettings Default(IOrganizationService service, bool sandbox = true)
@@ -25,14 +25,12 @@ namespace XrmEarth.Samples
             if (_defaultSettings == null)
             {
                 _defaultSettings = LoadSettings(service);
-                _settingsValidUntil = DateTime.UtcNow.AddMinutes(60);
+                _settingsValidUntil = DateTime.UtcNow.AddMinutes(5);
             }
 
             return _defaultSettings;
         }
-        #endregion | Static Members |
 
-        #region | Functions |
         public static StartupConfiguration CreateConfig(IOrganizationService service)
         {
             return new StartupConfiguration
@@ -41,12 +39,11 @@ namespace XrmEarth.Samples
                 {
                     new CrmStorageTarget(service)
                     {
-                        Policy = new EntityStoragePolicy
+                        Policy = new WebResourceStoragePolicy
                         {
-                            Prefix = "new",
-                            LogicalName = "configuration",
-                            KeyAttributeLogicalName = "name",
-                            ValueAttributeLogicalName = "value",
+                             Prefix = "new",
+                             Name = "configuration",
+                             Encoding = Encoding.UTF8
                         }
                     }
                 }
@@ -56,11 +53,6 @@ namespace XrmEarth.Samples
         {
             return ConfigurationManager.Load<AppSettings>(CreateConfig(service));
         }
-        public static void SaveSettings(AppSettings settings, IOrganizationService service)
-        {
-            ConfigurationManager.Save(settings, CreateConfig(service));
-        }
-        #endregion | Functions |
     }
 
     public class CustomApi

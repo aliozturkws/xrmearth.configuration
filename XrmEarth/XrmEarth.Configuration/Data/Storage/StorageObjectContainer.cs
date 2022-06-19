@@ -43,13 +43,11 @@ namespace XrmEarth.Configuration.Data.Storage
 
         private Dictionary<string, Type> _keys;
 
-
         private void ValidateOwnerType()
         {
             _keys = null;
             Initialize();
         }
-
 
         public void Initialize()
         {
@@ -144,7 +142,6 @@ namespace XrmEarth.Configuration.Data.Storage
             }
         }
 
-
         public Dictionary<string, Type> GetKeys()
         {
             if (_keys != null)
@@ -194,7 +191,7 @@ namespace XrmEarth.Configuration.Data.Storage
                 value = ValueConvert(field, value);
                 value = ValueConvertWritable(field, value);
 
-                keyAndValues[field.Key] = new ValueContainer {Value = value, Type = field.Property.PropertyType};
+                keyAndValues[field.Key] = new ValueContainer { Value = value, Type = field.Property.PropertyType };
             }
 
             if (field.IsClass)
@@ -233,9 +230,8 @@ namespace XrmEarth.Configuration.Data.Storage
 
         public void SetValue(object instance, Dictionary<string, ValueContainer> keyAndValues, StorageFieldContainer field)
         {
-            if (!keyAndValues.ContainsKey(field.Key))
+            if (keyAndValues == null || !keyAndValues.ContainsKey(field.Key))
                 return;
-
 
             var value = keyAndValues[field.Key].Value;
 
