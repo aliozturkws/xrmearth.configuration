@@ -30,44 +30,4 @@ namespace XrmEarth.Configuration.Data.Exceptions
             
         }
     }
-
-    public class ArgumentMissingException : ConfigurationCoreException
-    {
-        public ArgumentMissingException()
-        {
-
-        }
-
-        public ArgumentMissingException(string message)
-            : base(message)
-        {
-
-        }
-
-        public ArgumentMissingException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-
-        }
-    }
-
-    public class MssqlStorageException : ConfigurationCoreException
-    {
-        public MssqlStorageException()
-        {
-
-        }
-
-        public MssqlStorageException(string message)
-            : base(message)
-        {
-
-        }
-
-        public MssqlStorageException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-
-        }
-    }
 }

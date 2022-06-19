@@ -1,5 +1,9 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System;
+using XrmEarth.Configuration.Data;
+using XrmEarth.Configuration.Policies;
+using XrmEarth.Configuration.Target;
+using ConfigurationManager = XrmEarth.Configuration.ConfigurationManager;
 
 namespace XrmEarth.Samples
 {
@@ -20,18 +24,43 @@ namespace XrmEarth.Samples
 
             if (_defaultSettings == null)
             {
-                if (sandbox)
-                {
-                    AppSettingsManager.InitSandbox();
-                }
-
-                _defaultSettings = AppSettingsManager.LoadSettings(service);
+                _defaultSettings = LoadSettings(service);
                 _settingsValidUntil = DateTime.UtcNow.AddMinutes(60);
             }
 
             return _defaultSettings;
         }
         #endregion | Static Members |
+
+        #region | Functions |
+        public static StartupConfiguration CreateConfig(IOrganizationService service)
+        {
+            return new StartupConfiguration
+            {
+                Targets = new TargetCollection
+                {
+                    new CrmStorageTarget(service)
+                    {
+                        Policy = new EntityStoragePolicy
+                        {
+                            Prefix = "new",
+                            LogicalName = "configuration",
+                            KeyAttributeLogicalName = "name",
+                            ValueAttributeLogicalName = "value",
+                        }
+                    }
+                }
+            };
+        }
+        public static AppSettings LoadSettings(IOrganizationService service)
+        {
+            return ConfigurationManager.Load<AppSettings>(CreateConfig(service));
+        }
+        public static void SaveSettings(AppSettings settings, IOrganizationService service)
+        {
+            ConfigurationManager.Save(settings, CreateConfig(service));
+        }
+        #endregion | Functions |
     }
 
     public class CustomApi
