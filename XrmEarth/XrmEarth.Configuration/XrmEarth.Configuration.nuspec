@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>XrmEarth.Configuration</id>
+    <version>1.0.0</version>
+    <title>XrmEarth.Configuration</title>
+    <authors>aliozturkws</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/aliozturkws/xrmearth.configuration/</projectUrl>
+    <repositoryUrl>https://github.com/aliozturkws/xrmearth.configuration/</repositoryUrl>
+    <description>Allows storage and reading of settings on a custom entity or webresource in Dynamics CRM</description>
+    <releaseNotes></releaseNotes>
+    <copyright>@2022</copyright>
+    <tags>Dynamics CRM Plugin Workflow Console App</tags>
+  </metadata>
+</package>
