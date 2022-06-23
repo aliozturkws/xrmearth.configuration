@@ -18,3 +18,8 @@
 
 * Download solution [xrmearthconfiguration.zip](https://drive.google.com/file/d/1Du6HcDSkTQc234PdDdh78vL3MwNw5nOb/view?usp=sharing) and add it to crm. :floppy_disk:
 * then customize it by reviewing the [example here](https://drive.google.com/drive/folders/1TqphqroZjoSX_5LiWJWiFe3lh3IZOUaE?usp=sharing) :point_left:
+
+### Install Nuget Package
+```
+Install-Package XrmEarth.Configuration -Version 1.0.0
+```
